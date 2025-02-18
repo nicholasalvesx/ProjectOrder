@@ -1,6 +1,6 @@
 namespace ProjectOrder.Domain.Entity
 {
-    public class Product : SharedCore.DomainObjects.Entity
+    public class Product
     {
         public int ProductId { get; set; }
         public string Name { get; set; } 

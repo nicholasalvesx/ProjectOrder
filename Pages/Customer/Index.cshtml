@@ -1,0 +1,17 @@
+@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ProjectOrder.Pages.Customer.CustomerModel
+
+<h2>Lista de clientes</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+</table>
+<a asp-area="" asp-page="/Customer/CreateCustomer" class="btn btn-primary">Novo cliente</a>

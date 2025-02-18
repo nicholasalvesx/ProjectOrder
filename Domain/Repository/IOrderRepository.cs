@@ -4,7 +4,7 @@ namespace ProjectOrder.Domain.Repository;
 
 public interface IOrderRepository
 {
-    Task<Order> GetOrderByIAync(int orderId);
+    Task<Order> GetOrderByIdAsync(int orderId);
     Task<IEnumerable<Order>> GetAllAsync();
     void AddOrder(Order order);
     void UpdateOrder(Order order);

@@ -1,10 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectOrder.Domain.Entity;
 
-namespace ProjectOrder.Infra.Data;
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+namespace ProjectOrder.Infra.Data
 {
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<Costumer> Costumers { get; set; }
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+    {
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>()
+                .HasKey(c => c.CostumerId);
+        }
+    }
 }

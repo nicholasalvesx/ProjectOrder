@@ -4,13 +4,12 @@ namespace ProjectOrder.SharedCore.DomainObjects
 {
     public abstract class Entity
     {
-        [ExplicitKey]
-        public Guid Id { get; }
-
-        protected Entity()
+        protected Entity(int id)
         {
-            Id = Guid.NewGuid();
+            Id = id;
         }
+
+        private int Id { get; }
 
         public override bool Equals(object? obj)
         {
