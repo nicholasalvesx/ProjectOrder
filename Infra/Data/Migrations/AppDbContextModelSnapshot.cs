@@ -22,6 +22,27 @@ namespace ProjectOrder.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ProjectOrder.Domain.Entity.Costumer", b =>
+                {
+                    b.Property<int>("CostumerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CostumerId"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CostumerId");
+
+                    b.ToTable("Costumers");
+                });
+
             modelBuilder.Entity("ProjectOrder.Domain.Entity.Order", b =>
                 {
                     b.Property<int>("OrderId")

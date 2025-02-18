@@ -12,8 +12,8 @@ using ProjectOrder.Infra.Data;
 namespace ProjectOrder.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250218120336_initial migration")]
-    partial class initialmigration
+    [Migration("20250218151044_AddCostumerTable")]
+    partial class AddCostumerTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,27 @@ namespace ProjectOrder.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ProjectOrder.Domain.Entity.Costumer", b =>
+                {
+                    b.Property<int>("CostumerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CostumerId"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CostumerId");
+
+                    b.ToTable("Costumers");
+                });
 
             modelBuilder.Entity("ProjectOrder.Domain.Entity.Order", b =>
                 {
