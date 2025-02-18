@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "TD79CeugIAU=",
+  "dgSpecHash": "1bjpxOm9ImA=",
   "success": true,
   "projectFilePath": "/home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/ProjectOrder.csproj",
   "expectedPackageFiles": [
     "/home/nicholas/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/home/nicholas/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",
+    "/home/nicholas/.nuget/packages/dapper/2.0.78/dapper.2.0.78.nupkg.sha512",
+    "/home/nicholas/.nuget/packages/dapper.contrib/2.0.78/dapper.contrib.2.0.78.nupkg.sha512",
     "/home/nicholas/.nuget/packages/entityframework/6.5.1/entityframework.6.5.1.nupkg.sha512",
     "/home/nicholas/.nuget/packages/humanizer/2.14.1/humanizer.2.14.1.nupkg.sha512",
     "/home/nicholas/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ProjectOrder.Pages;
@@ -11,7 +10,6 @@ public class IndexModel : PageModel
     {
         _logger = logger;
     }
-
     public void OnGet()
     {
     }

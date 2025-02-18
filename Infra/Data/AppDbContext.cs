@@ -6,4 +6,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<Costumer> Costumers { get; set; }
 }

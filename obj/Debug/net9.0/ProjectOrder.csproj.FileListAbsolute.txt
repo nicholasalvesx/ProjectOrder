@@ -337,3 +337,6 @@
 /home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/obj/Debug/net9.0/ProjectOrder.pdb
 /home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/obj/Debug/net9.0/ProjectOrder.genruntimeconfig.cache
 /home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/obj/Debug/net9.0/ref/ProjectOrder.dll
+/home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/obj/Debug/net9.0/ProjectOrder.sourcelink.json
+/home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/bin/Debug/net9.0/Dapper.dll
+/home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/bin/Debug/net9.0/Dapper.Contrib.dll
