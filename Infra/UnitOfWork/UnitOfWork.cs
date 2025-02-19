@@ -8,11 +8,13 @@ public class UnitOfWork : IUnitOfWork
     private readonly AppDbContext _context;
     public IOrderRepository Orders { get; }
     public IProductRepository Products { get; }
-    public UnitOfWork(AppDbContext context, IOrderRepository orderRepository, IProductRepository productRepository)
+    public ICustomerRepository Customers { get; }
+    public UnitOfWork(AppDbContext context, IOrderRepository orderRepository, IProductRepository productRepository, ICustomerRepository customers)
     {
         _context = context;
         Orders = orderRepository;
         Products = productRepository;
+        Customers = customers;
     }
     public async Task<int> CommitAsync()
     {

@@ -1,0 +1,13 @@
+@page
+@model ProjectOrder.Pages.Customer.DeleteCustomerModel
+
+<h2>Tem certeza que deseja excluir este Cliente?</h2>
+
+<p>Nome: @Model.Customer.Name</p>
+<p>Email: @Model.Customer.Email</p>
+
+<form method="post">
+    <input type="hidden" asp-for="Customer.Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-page="Index" class="btn btn-secondary">Cancelar</a>
+</form>

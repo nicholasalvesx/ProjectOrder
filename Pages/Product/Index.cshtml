@@ -1,0 +1,29 @@
+@page
+@model ProjectOrder.Pages.Product.ProductModel
+
+
+<h2>Lista de Produtos</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var produto in Model.Products)
+    {
+        <tr>
+            <td>@produto.Name</td>
+            <td>@produto.Price.ToString("C")</td>
+            <td>
+                <a asp-page="Edit" asp-route-id="@produto.Id" class="btn btn-warning">Editar</a>
+                <a asp-page="Delete" asp-route-id="@produto.Id" class="btn btn-danger">Excluir</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a asp-page="CreateProduct" class="btn btn-primary">Adicionar Produto</a>

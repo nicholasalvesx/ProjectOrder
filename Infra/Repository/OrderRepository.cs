@@ -7,25 +7,28 @@ namespace ProjectOrder.Infra.Repository;
 
 public class OrderRepository(AppDbContext context) : IOrderRepository
 {
-    public async Task<Order> GetOrderByIdAsync(int orderId)
-    {
-       return (await context.Orders.FindAsync(orderId))!;
+    public async Task<Order?> GetOrderByIdAsync(int orderId)
+    { 
+       return await context.Orders.FindAsync(orderId);
     }
     public async Task<IEnumerable<Order>> GetAllAsync()
     {
         return await context.Orders.ToListAsync();
     }
-    public void AddOrder(Order order)
+    public async Task AddOrder(Order order)
     { 
-        context.Orders.AddAsync(order);
+        await context.Orders.AddAsync(order);
+        await context.SaveChangesAsync();
     }
-    public void UpdateOrder(Order order)
+    public async Task UpdateOrder(Order order)
     {
         context.Orders.Update(order);
+        await context.SaveChangesAsync();
     }
-    public void DeleteOrder(Order order)
+    public async Task DeleteOrder(Order order)
     {
         context.Orders.Remove(order);
+        await context.SaveChangesAsync();
     }
     
 }

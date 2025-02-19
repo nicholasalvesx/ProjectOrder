@@ -13,7 +13,6 @@ public class CustomerRepository : ICustomerRepository
     {
         _context = context;
     }
-
     public async Task<Customer?> GetByIdAsync(int id)
     {
         return await _context.Customers.FindAsync(id);
@@ -28,12 +27,14 @@ public class CustomerRepository : ICustomerRepository
         await _context.Customers.AddAsync(customer);
         await _context.SaveChangesAsync();
     }
-    public void UpdateCustomer(Customer customer)
+    public async Task UpdateCustomer(Customer customer)
     {
         _context.Customers.Update(customer);
+        await _context.SaveChangesAsync();
     }
-    public void DeleteCustomer(Customer customer)
+    public async Task DeleteCustomer(Customer customer)
     {
         _context.Customers.Remove(customer);
+        await _context.SaveChangesAsync();
     }
 }

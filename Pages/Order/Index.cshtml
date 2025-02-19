@@ -1,0 +1,27 @@
+@page
+@model ProjectOrder.Pages.Order.OrdersModel
+
+<h2>Lista de Pedidos</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Cliente</th>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var pedido in Model.Orders)
+    {
+        <tr>
+            <td>@pedido.Customer.Name</td>
+            <td>@pedido.Product.Name</td>
+            <td>@pedido.Quantity</td>
+            <td>@(pedido.Quantity * pedido.Product.Price).ToString("C")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a asp-page="CreateOrder" class="btn btn-primary">Fazer Pedido</a>

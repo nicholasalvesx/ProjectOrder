@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ProjectOrder.Domain.Entity;
 using ProjectOrder.Infra.UnitOfWork;
 
-namespace ProjectOrder.Pages;
+namespace ProjectOrder.Pages.Order;
 
 public class OrdersModel : PageModel
 {
@@ -12,10 +11,10 @@ public class OrdersModel : PageModel
     {
         _unitOfWork = unitOfWork;
     }
-    public List<Order> Orders { get; set; } = new();
+    public List<Domain.Entity.Order> Orders { get; set; } = new();
 
     public async Task OnGetAsync()
     {
-        Orders = (List<Order>)await _unitOfWork.Orders.GetAllAsync();
+        Orders = (List<Domain.Entity.Order>)await _unitOfWork.Orders.GetAllAsync();
     }
 }

@@ -11,24 +11,23 @@ public class ProductRepository(AppDbContext context) : IProductRepository
     {
         return await context.Products.FindAsync(productId);
     }
-
     public async Task<IEnumerable<Product>> GetAllAsync()
     {
         return await context.Products.ToListAsync();
     }
-
-    public void AddProduct(Product product)
+    public async Task AddProduct(Product product)
     {
         context.Products.Add(product);
+        await context.SaveChangesAsync();
     }
-
-    public void UpdateProduct(Product product)
+    public async Task UpdateProduct(Product product)
     {
         context.Products.Update(product);
+        await context.SaveChangesAsync();
     }
-
-    public void DeleteProduct(Product product)
+    public async Task DeleteProduct(Product product)
     {
         context.Products.Remove(product);
+        await context.SaveChangesAsync();
     }
 }

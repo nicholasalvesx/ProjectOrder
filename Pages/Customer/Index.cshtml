@@ -1,17 +1,30 @@
 @page
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ProjectOrder.Pages.Customer.CustomerModel
 
 <h2>Lista de clientes</h2>
+
 <table class="table">
     <thead>
     <tr>
         <th>Id</th>
         <th>Name</th>
-        <th>Phone</th>
         <th>Email</th>
         <th>Actions</th>
     </tr>
     </thead>
+    <tbody>
+    @foreach (var customer in Model.Costumers)
+    {
+        <tr>
+            <td>@customer.Id</td>
+            <td>@customer.Name</td>
+            <td>@customer.Email</td>
+            <td>
+                <a asp-page="EditCustomer" asp-route-id="@customer.Id" class="btn btn-warning">Editar</a>
+                <a asp-page="DeleteCustomer" asp-route-id="@customer.Id" class="btn btn-info">Deletar</a>
+            </td>
+        </tr>
+    }
+    </tbody>
 </table>
 <a asp-area="" asp-page="/Customer/CreateCustomer" class="btn btn-primary">Novo cliente</a>
