@@ -1,14 +1,21 @@
-using MediatR;
+using ProjectOrder.Domain.Entity;
+using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Application.Commands;
-public class CreateOrderCommand : IRequest<bool>
-{ 
+
+public class CreateOrderCommand
+{
     public int CustomerId { get; set; }
     public int ProductId { get; set; }
-    public decimal Quantity { get; set; }
+    public int Quantity { get; set; }
 
-    public CreateOrderCommand(int customerId)
+    public async Task<bool> ExecuteAsync(IUnitOfWork unitOfWork)
     {
-        CustomerId = customerId;
+        var order = new Order(CustomerId, ProductId, Quantity);
+
+        await unitOfWork.Orders.AddOrder(order);
+        await unitOfWork.CommitAsync();
+
+        return true;
     }
 }

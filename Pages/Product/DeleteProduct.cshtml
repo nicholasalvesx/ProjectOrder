@@ -1,0 +1,12 @@
+@page
+@model ProjectOrder.Pages.Product.DeleteProduct
+
+<h2>Tem certeza que deseja excluir esse produto?</h2>
+
+<p>Nome: @Model.Product?.Name</p>
+
+<form method="post">
+    <input type="hidden" asp-for="Product.Id"/> 
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-page="Index" class="btn-primary">Cancelar</a>
+</form>

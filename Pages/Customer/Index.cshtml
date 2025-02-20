@@ -1,10 +1,11 @@
 @page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ProjectOrder.Pages.Customer.CustomerModel
 
 <h2>Lista de clientes</h2>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
     <tr>
         <th>Id</th>
         <th>Name</th>
@@ -20,8 +21,8 @@
             <td>@customer.Name</td>
             <td>@customer.Email</td>
             <td>
-                <a asp-page="EditCustomer" asp-route-id="@customer.Id" class="btn btn-warning">Editar</a>
-                <a asp-page="DeleteCustomer" asp-route-id="@customer.Id" class="btn btn-info">Deletar</a>
+                <a asp-page="/Customer/EditCustomer" asp-route-id="@customer.Id" class="btn btn-warning">Editar</a>
+                <a asp-page="/Customer/DeleteCustomer" asp-route-id="@customer.Id" class="btn btn-info">Deletar</a>
             </td>
         </tr>
     }

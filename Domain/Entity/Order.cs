@@ -1,24 +1,28 @@
-using ProjectOrder.Domain.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectOrder.Domain.Entity;
-public class Order
+public class Order 
     {
+        [Required]
         public int OrderId { get; set; }
+        [Required]
         public int CustomerId { get; set; }
-        public Customer? Customer { get; set; } 
+        [Required]
         public int ProductId { get; set; }
-        public Product? Product { get; set; } 
-        public decimal Quantity { get; set; }
-        public decimal TotalPrice => Quantity * Product!.Price;
+        public int Quantity { get; set; }
         public DateTime OrderDate { get; set; }
+        [Required]
+        public Customer Customer { get; set; }
+        [Required]
+        public Product Product { get; set; }
 
-        protected Order() {}
+        protected Order(){}
         
-        public Order(int customerId, int productId, decimal quantity)
+        public Order(int customerId, int productId, int quantity)
         {
-            CustomerId = customerId;
             ProductId = productId;
             Quantity = quantity;
-            OrderDate = DateTime.UtcNow;
+            CustomerId = customerId;
         }
+        
     }

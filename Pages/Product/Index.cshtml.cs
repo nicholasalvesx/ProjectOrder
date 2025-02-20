@@ -1,19 +1,18 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ProjectOrder.Infra.Data;
+using ProjectOrder.Domain.Repository;
 
 namespace ProjectOrder.Pages.Product;
 
 public class ProductModel : PageModel
 {
-    private readonly AppDbContext _context;
-    public List<Domain.Entity.Product> Products { get; set; } = new();
-    
-    public ProductModel(AppDbContext context)
+    private readonly IProductRepository _productRepository;
+    public ProductModel(IProductRepository productRepository)
     {
-        _context = context;
+        _productRepository = productRepository;
     }
-    public void OnGet()
+    public IEnumerable<Domain.Entity.Product>? Products { get; set; }
+    public async Task OnGetAsync()
     {
-        Products = _context.Products.ToList();
+        Products = await _productRepository.GetAllAsync();
     }
 }

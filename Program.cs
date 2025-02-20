@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ProjectOrder.Application.Services;
+using ProjectOrder.Application.Commands;
 using ProjectOrder.Infra.Data;
 using ProjectOrder.Infra.UnitOfWork;
 using ProjectOrder.Domain.Repository;
@@ -18,7 +18,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateOrderCommand).Assembly));
 
 var app = builder.Build();
 

@@ -1,30 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectOrder.Infra.Data;
+using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Product;
 
 public class CreateProductModel : PageModel
 {
-    private readonly AppDbContext _context;
-
-    [BindProperty]
-    public Domain.Entity.Product Product { get; set; } = new();
-
-    public CreateProductModel(AppDbContext context)
+    public Domain.Entity.Product Product { get; set; }
+    
+    private readonly IUnitOfWork _unitOfWork;
+    public CreateProductModel(Domain.Entity.Product product, IUnitOfWork unitOfWork)
     {
-        _context = context;
+        Product = product;
+        _unitOfWork = unitOfWork;
     }
-
-    public IActionResult OnPost()
+    
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
-
-        _context.Products.Add(Product);
-        _context.SaveChanges();
+        await _unitOfWork.Products.AddProduct(Product);
+        await _unitOfWork.CommitAsync();
         return RedirectToPage("Index");
     }
 }

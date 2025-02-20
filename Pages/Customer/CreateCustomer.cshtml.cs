@@ -1,26 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ProjectOrder.Domain.Repository;
-using ProjectOrder.Domain.Entity;
+using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Customer;
 
 public class CreateCustomerModel : PageModel
 {
-    private readonly ICustomerRepository _customerRepository;
+    [BindProperty] public Domain.Entity.Customer Customer { get; set; }
+    
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCustomerModel(ICustomerRepository customerRepository)
+    public CreateCustomerModel(Domain.Entity.Customer customer, IUnitOfWork unitOfWork)
     {
-        _customerRepository = customerRepository;
+        Customer = customer;
+        _unitOfWork = unitOfWork;
     }
-    [BindProperty]
-    public Domain.Entity.Customer Customer { get; set; } = new();
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(Domain.Entity.Customer customer)
     {
         if (!ModelState.IsValid)
             return Page();
         
-        await _customerRepository.AddCustomer(Customer);
+        await _unitOfWork.Customers.AddCustomer(customer);
+        await _unitOfWork.CommitAsync();
         return RedirectToPage("Index");
     }
 }

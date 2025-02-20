@@ -340,3 +340,4 @@
 /home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/obj/Debug/net9.0/ProjectOrder.sourcelink.json
 /home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/bin/Debug/net9.0/Dapper.dll
 /home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/bin/Debug/net9.0/Dapper.Contrib.dll
+/home/nicholas/Documentos/ToDo/ProjectOrder/ProjectOrder/bin/Debug/net9.0/MediatR.Extensions.Microsoft.DependencyInjection.dll

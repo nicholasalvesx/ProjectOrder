@@ -5,16 +5,20 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="Order.CustomerId">Cliente</label>
-        <select asp-for="Order.CustomerId" asp-items="@(new SelectList(new[] { Model.Customers }, "Id", "Name"))" class="form-control"></select>
+        <label asp-for="OrderCommand.CustomerId">Cliente</label>
+        <select asp-for="OrderCommand.CustomerId" asp-items="Model.Customers" class="form-control">
+            <option value="">Selecione um Cliente</option>
+        </select>
     </div>
     <div class="form-group">
-        <label asp-for="Order.ProductId">Produto</label>
-        <select asp-for="Order.ProductId" asp-items="@(new SelectList(Model.Products, "Id", "Name"))" class="form-control"></select>
+        <label asp-for="OrderCommand.ProductId">Produto</label>
+        <select asp-for="OrderCommand.ProductId" asp-items="Model.Products" class="form-control">
+            <option value="">Selecione um Produto</option>
+        </select>
     </div>
     <div class="form-group">
-        <label asp-for="Order.Quantity"></label>
-        <input asp-for="Order.Quantity" class="form-control" type="number" />
+        <label asp-for="OrderCommand.Quantity"></label>
+        <input asp-for="OrderCommand.Quantity" class="form-control" type="number" min="1" />
     </div>
     <button type="submit" class="btn btn-success">Salvar Pedido</button>
 </form>

@@ -8,13 +8,13 @@ public class EditCustomerModel : PageModel
 {
     private readonly ICustomerRepository _repository;
 
-    public EditCustomerModel(ICustomerRepository repository)
+    public EditCustomerModel(ICustomerRepository repository, Domain.Entity.Customer customer)
     {
         _repository = repository;
+        Customer = customer;
     }
-    
-    [BindProperty]
-    public Domain.Entity.Customer Customer { get; set; } = new();
+
+    [BindProperty] public Domain.Entity.Customer Customer { get; set; } = new();
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
@@ -29,7 +29,7 @@ public class EditCustomerModel : PageModel
         if (!ModelState.IsValid)
             return Page();
 
-        _repository.UpdateCustomer(Customer);
+        await _repository.UpdateCustomer(Customer);
         return RedirectToPage("Index");
     }
 }

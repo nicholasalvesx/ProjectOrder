@@ -1,0 +1,18 @@
+@page
+@model ProjectOrder.Pages.Product.EditProductModel
+
+<h2>Editar produto</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Product"/>
+    <div class="mb-3">
+        <label asp-for="Product.Name" class="form-label">Nome do produto</label>
+        <input asp-for="Product.Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Product.Price" class="form-label">Quantidade</label>
+        <input asp-for="Product.Price" class="form-control" />
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>

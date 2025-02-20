@@ -8,13 +8,14 @@ public class DeleteCustomerModel : PageModel
 {
     private readonly ICustomerRepository _repository;
 
-    public DeleteCustomerModel(ICustomerRepository repository)
+    public DeleteCustomerModel(ICustomerRepository repository, Domain.Entity.Customer customer)
     {
         _repository = repository;
+        Customer = customer;
     }
 
     [BindProperty]
-    public Domain.Entity.Customer Customer { get; set; } = new();
+    public Domain.Entity.Customer Customer { get; set; }
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
@@ -26,7 +27,7 @@ public class DeleteCustomerModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        _repository.DeleteCustomer(Customer);
+        await _repository.DeleteCustomer(Customer);
         return RedirectToPage("Index");
     }
 }

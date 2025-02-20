@@ -6,13 +6,12 @@
 
 <form method="post">
     <div class="mb-3">
-        <label asp-for="Customer.Name" class="form-label"></label>
-        <input class="form-input" type="text" id="Customer.Name" name="Customer.Name" required/>
+        <label asp-for="Customer.Name" class="form-label">Nome do cliente</label>
+        <input asp-for="Customer.Name" class="form-control" required=""/>
     </div>
-    
     <div class="mb-3">
-        <label asp-for="Customer.Email" class="form-label"></label>
-        <input class="form-input" type="email" id="Customer.Email" name="Customer.Email" required/>
+        <label asp-for="Customer.Email" class="form-label">Email</label>
+        <input asp-for="Customer.Email" class="form-control" required=""/>
     </div>
     <button type="submit" class="btn btn-success">Salvar</button>
 </form>

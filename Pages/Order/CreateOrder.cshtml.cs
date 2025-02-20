@@ -1,68 +1,50 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ProjectOrder.Application.Commands;
 using ProjectOrder.Infra.Data;
+using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Order;
-
 public class CreateOrderModel : PageModel
 {
     private readonly AppDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
 
-    [BindProperty]
-    public Domain.Entity.Order Order { get; set; }
-    public List<Domain.Entity.Product> Products { get; set; } = new();
-    public List<SelectListItem> Customers { get; set; } = new();
+    [BindProperty] public CreateOrderCommand OrderCommand { get; set; } = new();
+    public List<SelectListItem> Customers { get; set; }
+    public List<SelectListItem> Products { get; set; }
 
-    public CreateOrderModel(AppDbContext context, Domain.Entity.Order order)
+    public CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork)
     {
-        _context = context ?? throw new ArgumentNullException(nameof(context));
-        Order = order;
+        _context = context;
+        _unitOfWork = unitOfWork;
     }
 
     public void OnGet()
     {
-        LoadCustomersAndProducts();
+        Customers = _context.Customers
+            .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+            .ToList();
+
+        Products = _context.Products
+            .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name })
+            .ToList();
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            LoadCustomersAndProducts();
             return Page();
         }
 
-        if (Order.ProductId == 0 || !_context.Products.Any(p => p.Id == Order.ProductId))
+        var result = await OrderCommand.ExecuteAsync(_unitOfWork);
+        if (result)
         {
-            ModelState.AddModelError("Order.ProductId", "O produto selecionado é inválido.");
-            LoadCustomersAndProducts();
-            return Page();
+            return RedirectToPage("/Order/Index");
         }
-
-        _context.Orders.Add(Order);
-        _context.SaveChanges();
-        return RedirectToPage("Index");
+        ModelState.AddModelError(string.Empty, "Erro ao criar pedido.");
+        return Page();
     }
-
-    private void LoadCustomersAndProducts()
-    {
-        Console.WriteLine("Carregando Clientes");
-        Console.WriteLine($"Total de Customers: {_context.Customers.Count()}");
-
-        Customers = _context.Customers
-            .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
-            .ToList() ?? [];
-
-        Console.WriteLine($"Customers carregados: {Customers.Count}");
-
-        Console.WriteLine("Carregando Produtos");
-        Console.WriteLine($"Total de Products: {_context.Products.Count()}");
-
-        Products = _context.Products
-            .ToList() ?? [];
-
-        Console.WriteLine($"Products carregados: {Products.Count}");
-    }
-
 }
