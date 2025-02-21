@@ -1,33 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters.Xml;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjectOrder.Domain.Repository;
+using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Customer;
 
 public class DeleteCustomerModel : PageModel
 {
-    private readonly ICustomerRepository _repository;
-
-    public DeleteCustomerModel(ICustomerRepository repository, Domain.Entity.Customer customer)
+    private readonly IUnitOfWork _unitOfWork;
+    public DeleteCustomerModel(IUnitOfWork unitOfWork,Domain.Entity.Customer customer)
     {
-        _repository = repository;
         Customer = customer;
+        _unitOfWork = unitOfWork;
     }
-
     [BindProperty]
-    public Domain.Entity.Customer Customer { get; set; }
+    public Domain.Entity.Customer? Customer { get; set; }
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        Customer = await _repository.GetByIdAsync(id);
+        Customer = await _unitOfWork.Customers.GetByIdAsync(id);
         if (Customer == null)
             return NotFound();
         return Page();
     }
-
     public async Task<IActionResult> OnPostAsync()
     {
-        await _repository.DeleteCustomer(Customer);
+        if (Customer != null) await _unitOfWork.Customers.DeleteCustomer(Customer);
         return RedirectToPage("Index");
     }
 }

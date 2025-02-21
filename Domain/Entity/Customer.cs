@@ -5,13 +5,11 @@ namespace ProjectOrder.Domain.Entity;
 public class Customer
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    [Required]
-    public string Name { get; set; }
-    [Required]
+    public string Name { get; set; } 
     public string Email { get; set; }
-    public Customer() { }
+
     public Customer(string name, string email)
     {
         Name = name;

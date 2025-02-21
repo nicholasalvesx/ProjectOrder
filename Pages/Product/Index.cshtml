@@ -1,10 +1,6 @@
 @page
 @model ProjectOrder.Pages.Product.ProductModel
 
-@{
-    System.Diagnostics.Debug.Assert(Model.Products != null);
-}
-
 <h2>Lista de Produtos</h2>
 
 <table class="table table-striped table-bordered">
@@ -17,7 +13,7 @@
     </thead>
     <tbody>
     
-    @foreach (var produto in Model.Products)
+    @foreach (var produto in Model.Product)
     {
         <tr>
             <td>@produto.Name</td>

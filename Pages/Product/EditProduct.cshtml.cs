@@ -14,7 +14,7 @@ public class EditProductModel : PageModel
         Product = product;
     }
     [BindProperty]
-    public Domain.Entity.Product Product { get; set; }
+    public Domain.Entity.Product? Product { get; set; }
 
     public async Task<IActionResult> OnPostAsync(int id)
     {
@@ -32,8 +32,8 @@ public class EditProductModel : PageModel
         {
             return Page();
         }
-         
-        await _unitOfWork.Products.UpdateProduct(Product);
+
+        if (Product != null) await _unitOfWork.Products.UpdateProduct(Product);
         await _unitOfWork.CommitAsync();
         return RedirectToPage("Index");
     }

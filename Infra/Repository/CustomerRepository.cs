@@ -8,7 +8,6 @@ namespace ProjectOrder.Infra.Repository;
 public class CustomerRepository : ICustomerRepository
 {
     private readonly AppDbContext _context;
-
     public CustomerRepository(AppDbContext context)
     {
         _context = context;
@@ -17,7 +16,6 @@ public class CustomerRepository : ICustomerRepository
     {
         return await _context.Customers.FindAsync(id);
     }
-
     public async Task<IEnumerable<Customer>> GetAllAsync()
     {
         return await _context.Customers.ToListAsync();

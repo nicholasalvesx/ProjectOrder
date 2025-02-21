@@ -12,7 +12,6 @@ public class OrdersModel : PageModel
         _unitOfWork = unitOfWork;
     }
     public List<Domain.Entity.Order>? Orders { get; set; }
-
     public async Task OnGetAsync()
     {
        Orders = (List<Domain.Entity.Order>?)await _unitOfWork.Orders.GetAllAsync();
