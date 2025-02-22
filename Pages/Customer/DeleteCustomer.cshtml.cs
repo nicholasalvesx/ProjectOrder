@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters.Xml;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ProjectOrder.Domain.Repository;
 using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Customer;
@@ -9,9 +7,8 @@ namespace ProjectOrder.Pages.Customer;
 public class DeleteCustomerModel : PageModel
 {
     private readonly IUnitOfWork _unitOfWork;
-    public DeleteCustomerModel(IUnitOfWork unitOfWork,Domain.Entity.Customer customer)
+    public DeleteCustomerModel(IUnitOfWork unitOfWork)
     {
-        Customer = customer;
         _unitOfWork = unitOfWork;
     }
     [BindProperty]

@@ -1,23 +1,21 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ProjectOrder.Domain.Repository;
+using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Customer;
 
 public class EditCustomerModel : PageModel
 {
-    private readonly ICustomerRepository _repository;
-    public EditCustomerModel(ICustomerRepository repository, Domain.Entity.Customer customer)
+    private readonly IUnitOfWork _unitOfWork;
+    public EditCustomerModel(Domain.Entity.Customer customer ,IUnitOfWork unitOfWork)
     {
-        _repository = repository;
-        Customer = customer;
+        _unitOfWork = unitOfWork;
     }
     [BindProperty] public Domain.Entity.Customer? Customer { get; set; }
-
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        Customer = await _repository.GetByIdAsync(id);
+        Customer = await _unitOfWork.Customers.GetByIdAsync(id);
         if (Customer == null)
             return NotFound();
         return Page();
@@ -29,7 +27,7 @@ public class EditCustomerModel : PageModel
             return Page();
 
         Debug.Assert(Customer != null, nameof(Customer) + " != null");
-        await _repository.UpdateCustomer(Customer);
+        await _unitOfWork.Customers.UpdateCustomer(Customer);
         return RedirectToPage("Index");
     }
 }
