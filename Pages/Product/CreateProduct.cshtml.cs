@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectOrder.Application.Commands;
-using ProjectOrder.Infra.Data;
 using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Product;

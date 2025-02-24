@@ -1,4 +1,4 @@
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using ProjectOrder.Domain.Entity;
 using ProjectOrder.Domain.Repository;
 using ProjectOrder.Infra.Data;
@@ -11,7 +11,7 @@ public class ProductRepository(AppDbContext context) : IProductRepository
     {
         return await context.Products.FindAsync(productId);
     }
-    public async Task<IEnumerable<Product>> GetAllAsync()
+    public async Task<List<Product>> GetAllAsync()
     {
         return await context.Products.ToListAsync();
     }
