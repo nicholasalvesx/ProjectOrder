@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjectOrder.Infra.UnitOfWork;
@@ -11,19 +12,21 @@ public class DeleteCustomerModel : PageModel
     {
         _unitOfWork = unitOfWork;
     }
-    [BindProperty]
-    public Domain.Entity.Customer? Customer { get; set; }
-
+    [BindProperty] public Domain.Entity.Customer? Customer { get; set; }
     public async Task<IActionResult> OnGetAsync(int id)
     {
         Customer = await _unitOfWork.Customers.GetByIdAsync(id);
         if (Customer == null)
+        {
             return NotFound();
+        } 
+        
         return Page();
     }
     public async Task<IActionResult> OnPostAsync()
     {
-        if (Customer != null) await _unitOfWork.Customers.DeleteCustomer(Customer);
+        Debug.Assert(Customer != null, nameof(Customer) + " != null");
+        await _unitOfWork.Customers.DeleteCustomer(Customer);
         return RedirectToPage("Index");
     }
 }

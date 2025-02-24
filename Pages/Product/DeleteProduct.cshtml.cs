@@ -10,10 +10,9 @@ public class DeleteProduct : PageModel
     private readonly IUnitOfWork _unitOfWork;
     [BindProperty] public Domain.Entity.Product? Product { get; set; }
     
-    public DeleteProduct(IUnitOfWork unitOfWork, Domain.Entity.Product product)
+    public DeleteProduct(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        Product = product;
     }
     public async Task<IActionResult> OnGetAsync(int id)
     {
@@ -24,12 +23,10 @@ public class DeleteProduct : PageModel
         }
         return Page();
     }
-
     public async Task<IActionResult> OnPostAsync()
     {
         Debug.Assert(Product != null, nameof(Product) + " != null");
         await _unitOfWork.Products.DeleteProduct(Product);
-        await _unitOfWork.CommitAsync();
         return RedirectToPage("./Index");
     }
 }

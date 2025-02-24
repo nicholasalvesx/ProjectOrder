@@ -7,9 +7,9 @@ namespace ProjectOrder.Infra.Repository;
 
 public class ProductRepository(AppDbContext context) : IProductRepository
 {
-    public async Task<Product?> GetByIdAsync(int productId)
+    public async Task<Product?> GetByIdAsync(int id)
     {
-        return await context.Products.FindAsync(productId);
+        return await context.Products.FindAsync(id);
     }
     public async Task<List<Product>> GetAllAsync()
     {

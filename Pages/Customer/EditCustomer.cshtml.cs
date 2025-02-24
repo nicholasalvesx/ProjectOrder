@@ -8,16 +8,19 @@ namespace ProjectOrder.Pages.Customer;
 public class EditCustomerModel : PageModel
 {
     private readonly IUnitOfWork _unitOfWork;
-    public EditCustomerModel(Domain.Entity.Customer customer ,IUnitOfWork unitOfWork)
+    public EditCustomerModel(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
     [BindProperty] public Domain.Entity.Customer? Customer { get; set; }
+
     public async Task<IActionResult> OnGetAsync(int id)
     {
         Customer = await _unitOfWork.Customers.GetByIdAsync(id);
         if (Customer == null)
+        {
             return NotFound();
+        }
         return Page();
     }
 
