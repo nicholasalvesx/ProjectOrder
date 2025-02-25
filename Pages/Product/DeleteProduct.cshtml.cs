@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjectOrder.Infra.UnitOfWork;
@@ -7,9 +6,8 @@ namespace ProjectOrder.Pages.Product;
 
 public class DeleteProduct : PageModel
 {
-    private readonly IUnitOfWork _unitOfWork;
-    [BindProperty] public Domain.Entity.Product? Product { get; set; }
-    
+    private readonly IUnitOfWork _unitOfWork; 
+    public Domain.Entity.Product? Product { get; set; }
     public DeleteProduct(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
@@ -25,8 +23,8 @@ public class DeleteProduct : PageModel
     }
     public async Task<IActionResult> OnPostAsync()
     {
-        Debug.Assert(Product != null, nameof(Product) + " != null");
-        await _unitOfWork.Products.DeleteProduct(Product);
+        if (Product != null) await _unitOfWork.Products.DeleteProduct(Product);
+        await _unitOfWork.CommitAsync();
         return RedirectToPage("./Index");
     }
 }

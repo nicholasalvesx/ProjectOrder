@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjectOrder.Infra.UnitOfWork;
@@ -13,9 +12,7 @@ public class EditProductModel : PageModel
     {
         _unitOfWork = unitOfWork;
     }
-
-    [BindProperty] public Domain.Entity.Product? Product { get; set; }
-
+    public Domain.Entity.Product? Product { get; set; }
     public async Task<IActionResult> OnPostAsync(int id)
     {
         Product = await _unitOfWork.Products.GetByIdAsync(id);
@@ -23,7 +20,6 @@ public class EditProductModel : PageModel
         {
             return NotFound();
         }
-
         return Page();
     }
 
@@ -32,8 +28,8 @@ public class EditProductModel : PageModel
         if (!ModelState.IsValid)
             return Page();
 
-        Debug.Assert(Product != null, nameof(Product) + " != null");
-        await _unitOfWork.Products.UpdateProduct(Product);
+        if (Product != null) await _unitOfWork.Products.UpdateProduct(Product);
+        await _unitOfWork.CommitAsync();
         return RedirectToPage("Index");
     }
 }

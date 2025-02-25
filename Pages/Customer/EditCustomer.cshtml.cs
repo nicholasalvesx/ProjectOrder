@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjectOrder.Infra.UnitOfWork;
@@ -12,7 +11,7 @@ public class EditCustomerModel : PageModel
     {
         _unitOfWork = unitOfWork;
     }
-    [BindProperty] public Domain.Entity.Customer? Customer { get; set; }
+    public Domain.Entity.Customer? Customer { get; set; }
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
@@ -23,14 +22,13 @@ public class EditCustomerModel : PageModel
         }
         return Page();
     }
-
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
             return Page();
 
-        Debug.Assert(Customer != null, nameof(Customer) + " != null");
-        await _unitOfWork.Customers.UpdateCustomer(Customer);
+        if (Customer != null) await _unitOfWork.Customers.UpdateCustomer(Customer);
+        await _unitOfWork.CommitAsync();
         return RedirectToPage("Index");
     }
 }

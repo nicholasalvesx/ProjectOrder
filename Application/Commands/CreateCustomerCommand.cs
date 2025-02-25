@@ -3,7 +3,7 @@ using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Application.Commands;
 public class CreateCustomerCommand
-{
+{ 
     public string Name { get; set; }
     public string Email { get; set; }
 
