@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProjectOrder.Domain.Entity;
 public class Product
@@ -10,6 +11,7 @@ public class Product
         [Required]
         public string Name { get; set; }
         [Required]
+        [Precision(18, 4)]
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public Product() {}

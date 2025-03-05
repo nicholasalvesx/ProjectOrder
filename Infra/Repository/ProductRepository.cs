@@ -15,19 +15,18 @@ public class ProductRepository(AppDbContext context) : IProductRepository
     {
         return await context.Products.ToListAsync();
     }
-    public async Task AddProduct(Product product)
+    public void AddProduct(Product product)
     {
         context.Products.Add(product);
-        await context.SaveChangesAsync();
     }
-    public async Task UpdateProduct(Product product)
+    public void UpdateProduct(Product product)
     {
         context.Products.Update(product);
-        await context.SaveChangesAsync();
+
     }
-    public async Task DeleteProduct(Product product)
+    public void DeleteProduct(Product product)
     {
         context.Products.Remove(product);
-        await context.SaveChangesAsync();
+    
     }
 }

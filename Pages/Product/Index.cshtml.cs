@@ -1,20 +1,19 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ProjectOrder.Infra.UnitOfWork;
+using ProjectOrder.Domain.Repository;
 
 namespace ProjectOrder.Pages.Product;
 
 public class ProductModel : PageModel
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IProductRepository _productRepository;
 
-    public ProductModel(IUnitOfWork unitOfWork)
+    public ProductModel(IProductRepository productRepository)
     {
-        _unitOfWork = unitOfWork;
+        _productRepository = productRepository;
     }
     public List<Domain.Entity.Product>? Product { get; set; }
-
     public async Task OnGetAsync()
     {
-        Product = (List<Domain.Entity.Product>?)await _unitOfWork.Products.GetAllAsync();
+        Product = (List<Domain.Entity.Product>?)await _productRepository.GetAllAsync();
     }
 }

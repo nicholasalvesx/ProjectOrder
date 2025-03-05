@@ -1,6 +1,10 @@
 @page
 @model ProjectOrder.Pages.Product.ProductModel
 
+@{
+    System.Diagnostics.Debug.Assert(Model.Product != null);
+}
+
 <h2>Lista de Produtos</h2>
 
 <table class="table table-striped table-bordered">

@@ -1,35 +1,45 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ProjectOrder.Domain.Repository;
 using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Product;
 
-public class EditProductModel : PageModel
+public class EditProductModel(IUnitOfWork unitOfWork, IProductRepository productRepository)
+    : PageModel
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public EditProductModel(IUnitOfWork unitOfWork)
+    [BindProperty] public Domain.Entity.Product? Product { get; set; } = new();
+    public async Task<IActionResult> OnGetAsync(int id)
     {
-        _unitOfWork = unitOfWork;
-    }
-    public Domain.Entity.Product? Product { get; set; }
-    public async Task<IActionResult> OnPostAsync(int id)
-    {
-        Product = await _unitOfWork.Products.GetByIdAsync(id);
+        Product = await productRepository.GetByIdAsync(id);
+        
         if (Product == null)
         {
             return NotFound();
         }
+        
         return Page();
     }
 
-    public async Task<IActionResult> OnPostEditAsync(int id)
+    public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-            return Page();
+        if (Product == null)
+        {
+            return BadRequest();
+        }
 
-        if (Product != null) await _unitOfWork.Products.UpdateProduct(Product);
-        await _unitOfWork.CommitAsync();
+        var existingproduct = await productRepository.GetByIdAsync(Product.Id);
+
+        if (existingproduct == null)
+        {
+            return NotFound();
+        }
+
+        existingproduct.Name = Product.Name;
+        existingproduct.Price = Product.Price;
+
+        productRepository.UpdateProduct(existingproduct);
+        await unitOfWork.CommitAsync();
         return RedirectToPage("Index");
     }
 }

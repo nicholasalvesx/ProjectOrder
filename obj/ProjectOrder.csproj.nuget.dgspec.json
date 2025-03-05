@@ -48,10 +48,6 @@
               "target": "Package",
               "version": "[2.0.78, )"
             },
-            "EntityFramework": {
-              "target": "Package",
-              "version": "[6.5.1, )"
-            },
             "MediatR": {
               "target": "Package",
               "version": "[12.0.1, )"

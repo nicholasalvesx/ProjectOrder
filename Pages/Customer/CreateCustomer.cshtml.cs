@@ -1,19 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ProjectOrder.Application.Commands;
+using ProjectOrder.Domain.Repository;
 using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Customer;
 
 public class CreateCustomerModel : PageModel
 {
-    [BindProperty] public CreateCustomerCommand CustomerCommand { get; set; } = new();
+    [BindProperty]
+    public Domain.Entity.Customer Customer { get; set; } = new();
     
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICustomerRepository _customerRepository;
 
-    public CreateCustomerModel(IUnitOfWork unitOfWork)
+    public CreateCustomerModel(IUnitOfWork unitOfWork, ICustomerRepository customerRepository, Domain.Entity.Customer customer)
     {
         _unitOfWork = unitOfWork;
+        _customerRepository = customerRepository;
+        Customer = customer;
     }
     public async Task<IActionResult> OnPostAsync()
     {
@@ -21,14 +25,11 @@ public class CreateCustomerModel : PageModel
         {
             return Page();
         }
+       
+        var customer = new Domain.Entity.Customer(Customer.Name, Customer.Email); 
         
-        var result = await CustomerCommand.ExecuteAsync(_unitOfWork);
-        if (result)
-        {
-            return RedirectToPage("Index");
-        }
-        ModelState.AddModelError(string.Empty, "Customer already exists");
+        _customerRepository.AddCustomer(customer);
         await _unitOfWork.CommitAsync();
-        return Page();
+        return RedirectToPage("Index");
     }
 }

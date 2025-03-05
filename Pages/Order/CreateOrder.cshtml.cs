@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ProjectOrder.Application.Commands;
+using ProjectOrder.Domain.Repository;
 using ProjectOrder.Infra.Data;
 using ProjectOrder.Infra.UnitOfWork;
 
@@ -10,15 +10,18 @@ public class CreateOrderModel : PageModel
 {
     private readonly AppDbContext _context;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IOrderRepository _orderRepository;
 
-    [BindProperty] public CreateOrderCommand OrderCommand { get; set; } = new();
+    [BindProperty]
+    public Domain.Entity.Order Order { get; set; } = new();
     public List<SelectListItem> Customers { get; set; }
     public List<SelectListItem> Products { get; set; }
 
-    public CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork)
+    public CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork, IOrderRepository orderRepository)
     {
         _context = context;
         _unitOfWork = unitOfWork;
+        _orderRepository = orderRepository;
     }
 
     public void OnGet()
@@ -39,12 +42,10 @@ public class CreateOrderModel : PageModel
             return Page();
         }
 
-        var result = await OrderCommand.ExecuteAsync(_unitOfWork);
-        if (result)
-        {
-            return RedirectToPage("/Order/Index");
-        }
-        ModelState.AddModelError(string.Empty, "Erro ao criar pedido.");
-        return Page();
+        var order = new Domain.Entity.Order(Order.CustomerId, Order.ProductId, Order.Quantity);
+        
+        _orderRepository.AddOrder(order);
+        await _unitOfWork.CommitAsync();
+        return RedirectToPage("Index");
     }
 }

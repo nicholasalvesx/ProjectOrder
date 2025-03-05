@@ -17,6 +17,9 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Logging.AddConsole();
+builder.Services.Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Debug);
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

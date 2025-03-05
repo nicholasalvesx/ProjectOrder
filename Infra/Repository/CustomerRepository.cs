@@ -20,19 +20,13 @@ public class CustomerRepository : ICustomerRepository
     {
         return await _context.Customers.ToListAsync();
     }
-    public async Task AddCustomer(Customer customer)
+    public void AddCustomer(Customer customer)
     {
-        await _context.Customers.AddAsync(customer);
-        await _context.SaveChangesAsync();
-    }
-    public async Task UpdateCustomer(Customer customer)
+         _context.Customers.AddAsync(customer);    }
+    public void UpdateCustomer(Customer customer)
     {
-        _context.Customers.Update(customer);
-        await _context.SaveChangesAsync();
-    }
-    public async Task DeleteCustomer(Customer customer)
+        _context.Customers.Update(customer);    }
+    public void DeleteCustomer(Customer customer)
     {
-        _context.Customers.Remove(customer);
-        await _context.SaveChangesAsync();
-    }
+        _context.Customers.Remove(customer);    }
 }

@@ -15,20 +15,17 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
     {
         return await context.Orders.ToListAsync();
     }
-    public async Task AddOrder(Order order)
+    public void AddOrder(Order order)
     { 
-        await context.Orders.AddAsync(order);
-        await context.SaveChangesAsync();
+        context.Orders.AddAsync(order);    
     }
-    public async Task UpdateOrder(Order order)
+    public void UpdateOrder(Order order)
     {
         context.Orders.Update(order);
-        await context.SaveChangesAsync();
     }
-    public async Task DeleteOrder(Order order)
+    public void DeleteOrder(Order order)
     {
         context.Orders.Remove(order);
-        await context.SaveChangesAsync();
     }
     
 }

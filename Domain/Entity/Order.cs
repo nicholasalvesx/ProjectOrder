@@ -16,7 +16,7 @@ public class Order
         [Required]
         public Product Product { get; set; }
 
-        protected Order(){}
+        public Order(){}
         
         public Order(int customerId, int productId, int quantity)
         {
