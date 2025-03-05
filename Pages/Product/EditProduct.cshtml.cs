@@ -17,10 +17,8 @@ public class EditProductModel(IUnitOfWork unitOfWork, IProductRepository product
         {
             return NotFound();
         }
-        
         return Page();
     }
-
     public async Task<IActionResult> OnPostAsync()
     {
         if (Product == null)
@@ -34,7 +32,7 @@ public class EditProductModel(IUnitOfWork unitOfWork, IProductRepository product
         {
             return NotFound();
         }
-
+        
         existingproduct.Name = Product.Name;
         existingproduct.Price = Product.Price;
 

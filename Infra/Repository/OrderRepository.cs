@@ -9,7 +9,7 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
 {
     public async Task<Order?> GetOrderByIdAsync(int orderId)
     { 
-       return await context.Orders.FindAsync(orderId);
+       return await context.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.OrderId == orderId);
     }
     public async Task<IEnumerable<Order>> GetAllAsync()
     {
@@ -17,7 +17,7 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
     }
     public void AddOrder(Order order)
     { 
-        context.Orders.AddAsync(order);    
+        context.Orders.Add(order);    
     }
     public void UpdateOrder(Order order)
     {

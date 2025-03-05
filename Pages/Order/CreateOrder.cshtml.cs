@@ -14,8 +14,8 @@ public class CreateOrderModel : PageModel
 
     [BindProperty]
     public Domain.Entity.Order Order { get; set; } = new();
-    public List<SelectListItem> Customers { get; set; }
-    public List<SelectListItem> Products { get; set; }
+    public List<SelectListItem> Customers { get; set; } = [];
+    public List<SelectListItem> Products { get; set; } = [];
 
     public CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork, IOrderRepository orderRepository)
     {
@@ -34,16 +34,17 @@ public class CreateOrderModel : PageModel
             .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name })
             .ToList();
     }
-
     public async Task<IActionResult> OnPostAsync()
     {
+        Console.WriteLine($"Customer: {Order.CustomerId}, Product: {Order.ProductId}, Quantity: {Order.Quantity}");
+        
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
         var order = new Domain.Entity.Order(Order.CustomerId, Order.ProductId, Order.Quantity);
-        
+ 
         _orderRepository.AddOrder(order);
         await _unitOfWork.CommitAsync();
         return RedirectToPage("Index");

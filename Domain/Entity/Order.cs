@@ -20,8 +20,8 @@ public class Order
         
         public Order(int customerId, int productId, int quantity)
         {
-            ProductId = productId;
             CustomerId = customerId;
+            ProductId = productId;
             Quantity = quantity;
         }
         

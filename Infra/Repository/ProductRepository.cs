@@ -9,7 +9,7 @@ public class ProductRepository(AppDbContext context) : IProductRepository
 {
     public async Task<Product?> GetByIdAsync(int id)
     {
-        return await context.Products.FindAsync(id);
+        return await context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
     }
     public async Task<List<Product>> GetAllAsync()
     {
@@ -22,11 +22,9 @@ public class ProductRepository(AppDbContext context) : IProductRepository
     public void UpdateProduct(Product product)
     {
         context.Products.Update(product);
-
     }
     public void DeleteProduct(Product product)
     {
         context.Products.Remove(product);
-    
     }
 }

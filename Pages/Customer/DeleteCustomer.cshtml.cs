@@ -24,9 +24,15 @@ public class DeleteCustomerModel : PageModel
         }   
         return Page();
     }
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(int id)
     {
-        _customerRepository.DeleteCustomer(Customer);
+        var deletecustomer = await _customerRepository.GetByIdAsync(id);
+        if (deletecustomer == null)
+        {
+            return NotFound();
+        }
+        
+        _customerRepository.DeleteCustomer(deletecustomer);
         await _unitOfWork.CommitAsync();
         return RedirectToPage("Index");
     }

@@ -14,7 +14,7 @@ public class CustomerRepository : ICustomerRepository
     }
     public async Task<Customer?> GetByIdAsync(int id)
     {
-        return await _context.Customers.FindAsync(id);
+        return await _context.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
     }
     public async Task<IEnumerable<Customer>> GetAllAsync()
     {
@@ -22,7 +22,7 @@ public class CustomerRepository : ICustomerRepository
     }
     public void AddCustomer(Customer customer)
     {
-         _context.Customers.AddAsync(customer);    }
+         _context.Customers.Add(customer);    }
     public void UpdateCustomer(Customer customer)
     {
         _context.Customers.Update(customer);    }

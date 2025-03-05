@@ -24,9 +24,15 @@ public class DeleteProduct : PageModel
         }
         return Page();
     }
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync(int id)
     {
-        _productRepository.DeleteProduct(Product);
+        var deleteProduct = await _productRepository.GetByIdAsync(id);
+        if (deleteProduct == null)
+        {
+            return NotFound();
+        }
+        
+        _productRepository.DeleteProduct(deleteProduct);
         await _unitOfWork.CommitAsync();
         return RedirectToPage("./Index");
     }

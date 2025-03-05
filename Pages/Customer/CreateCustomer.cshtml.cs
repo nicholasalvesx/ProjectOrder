@@ -13,11 +13,10 @@ public class CreateCustomerModel : PageModel
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICustomerRepository _customerRepository;
 
-    public CreateCustomerModel(IUnitOfWork unitOfWork, ICustomerRepository customerRepository, Domain.Entity.Customer customer)
+    public CreateCustomerModel(IUnitOfWork unitOfWork, ICustomerRepository customerRepository)
     {
         _unitOfWork = unitOfWork;
         _customerRepository = customerRepository;
-        Customer = customer;
     }
     public async Task<IActionResult> OnPostAsync()
     {
@@ -26,8 +25,8 @@ public class CreateCustomerModel : PageModel
             return Page();
         }
        
-        var customer = new Domain.Entity.Customer(Customer.Name, Customer.Email); 
-        
+        var customer = new Domain.Entity.Customer(Customer.Name, Customer.Email);
+
         _customerRepository.AddCustomer(customer);
         await _unitOfWork.CommitAsync();
         return RedirectToPage("Index");
