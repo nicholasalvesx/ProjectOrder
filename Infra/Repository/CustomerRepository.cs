@@ -22,11 +22,14 @@ public class CustomerRepository : ICustomerRepository
     }
     public void AddCustomer(Customer customer)
     {
-         _context.Customers.Add(customer);    }
+         _context.Customers.Add(customer);    
+    }
     public void UpdateCustomer(Customer customer)
     {
-        _context.Customers.Update(customer);    }
+        _context.Customers.Update(customer);    
+    }
     public void DeleteCustomer(Customer customer)
     {
-        _context.Customers.Remove(customer);    }
+        _context.Customers.Remove(customer);    
+    }
 }

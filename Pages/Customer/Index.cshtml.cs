@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProjectOrder.Domain.Repository;
 
 namespace ProjectOrder.Pages.Customer;
+
 public class CustomerModel : PageModel
 {
     private readonly ICustomerRepository _customerRepository;

@@ -6,13 +6,16 @@ using ProjectOrder.Infra.Data;
 using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Order;
+
 public class CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork, IOrderRepository orderRepository)
     : PageModel
 {
     [BindProperty]
     public int CustomerId { get; set; }
+    
     [BindProperty]
     public int ProductId { get; set; }
+    
     [BindProperty]
     public int Quantity { get; set; }
     public List<SelectListItem> Customers { get; set; } = [];
@@ -28,10 +31,9 @@ public class CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork, IOrd
             .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name })
             .ToList();
     }
+    
     public async Task<IActionResult> OnPostAsync()
     {
-        //Console.WriteLine($"Customer: {Order.CustomerId}, Product: {Order.ProductId}, Quantity: {Order.Quantity}");
-        
         if (!ModelState.IsValid)
         {
             return Page();
@@ -45,6 +47,7 @@ public class CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork, IOrd
             Console.WriteLine("Erro: Cliente não encontrados.");
             return Page();
         }
+        
         var product = await context.Products.FindAsync(ProductId);
         
         if (product == null)

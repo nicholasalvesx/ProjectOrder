@@ -15,6 +15,7 @@ public class DeleteProduct : PageModel
         _unitOfWork = unitOfWork;
         _productRepository = productRepository;
     }
+    
     public async Task<IActionResult> OnGetAsync(int id)
     {
         Product = await _productRepository.GetByIdAsync(id);
@@ -24,6 +25,7 @@ public class DeleteProduct : PageModel
         }
         return Page();
     }
+    
     public async Task<IActionResult> OnPostAsync(int id)
     {
         var deleteProduct = await _productRepository.GetByIdAsync(id);

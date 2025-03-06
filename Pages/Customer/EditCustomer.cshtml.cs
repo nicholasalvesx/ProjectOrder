@@ -4,6 +4,7 @@ using ProjectOrder.Domain.Repository;
 using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Customer;
+
 public class EditCustomerModel(IUnitOfWork unitOfWork, ICustomerRepository customerRepository)
     : PageModel
 {

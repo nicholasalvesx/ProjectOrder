@@ -14,6 +14,7 @@ public class DeleteCustomerModel : PageModel
         _unitOfWork = unitOfWork;
         _customerRepository = customerRepository;
     }
+    
     public Domain.Entity.Customer? Customer { get; set; }
     public async Task<IActionResult> OnGetAsync(int id)
     {
@@ -24,6 +25,7 @@ public class DeleteCustomerModel : PageModel
         }   
         return Page();
     }
+    
     public async Task<IActionResult> OnPostAsync(int id)
     {
         var deletecustomer = await _customerRepository.GetByIdAsync(id);

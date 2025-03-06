@@ -8,7 +8,8 @@ namespace ProjectOrder.Pages.Product;
 public class EditProductModel(IUnitOfWork unitOfWork, IProductRepository productRepository)
     : PageModel
 {
-    [BindProperty] public Domain.Entity.Product? Product { get; set; } = new();
+    [BindProperty] 
+    public Domain.Entity.Product? Product { get; set; } = new();
     public async Task<IActionResult> OnGetAsync(int id)
     {
         Product = await productRepository.GetByIdAsync(id);
@@ -19,6 +20,7 @@ public class EditProductModel(IUnitOfWork unitOfWork, IProductRepository product
         }
         return Page();
     }
+    
     public async Task<IActionResult> OnPostAsync()
     {
         if (Product == null)

@@ -10,9 +10,12 @@ public class Order
         [Required]
         public int ProductId { get; set; }
         public int Quantity { get; set; }
+        
         public DateTime OrderDate { get; set; }
+        
         [Required]
         public Customer Customer { get; set; }
+        
         [Required]
         public Product Product { get; set; }
         
@@ -22,5 +25,4 @@ public class Order
             ProductId = productId;
             Quantity = quantity;
         }
-        
     }
