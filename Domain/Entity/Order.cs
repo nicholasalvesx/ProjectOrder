@@ -15,8 +15,6 @@ public class Order
         public Customer Customer { get; set; }
         [Required]
         public Product Product { get; set; }
-
-        public Order(){}
         
         public Order(int customerId, int productId, int quantity)
         {

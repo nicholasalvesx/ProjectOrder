@@ -6,47 +6,57 @@ using ProjectOrder.Infra.Data;
 using ProjectOrder.Infra.UnitOfWork;
 
 namespace ProjectOrder.Pages.Order;
-public class CreateOrderModel : PageModel
+public class CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork, IOrderRepository orderRepository)
+    : PageModel
 {
-    private readonly AppDbContext _context;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IOrderRepository _orderRepository;
-
     [BindProperty]
-    public Domain.Entity.Order Order { get; set; } = new();
+    public int CustomerId { get; set; }
+    [BindProperty]
+    public int ProductId { get; set; }
+    [BindProperty]
+    public int Quantity { get; set; }
     public List<SelectListItem> Customers { get; set; } = [];
     public List<SelectListItem> Products { get; set; } = [];
 
-    public CreateOrderModel(AppDbContext context, IUnitOfWork unitOfWork, IOrderRepository orderRepository)
-    {
-        _context = context;
-        _unitOfWork = unitOfWork;
-        _orderRepository = orderRepository;
-    }
-
     public void OnGet()
     {
-        Customers = _context.Customers
+        Customers = context.Customers
             .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
             .ToList();
 
-        Products = _context.Products
+        Products = context.Products
             .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name })
             .ToList();
     }
     public async Task<IActionResult> OnPostAsync()
     {
-        Console.WriteLine($"Customer: {Order.CustomerId}, Product: {Order.ProductId}, Quantity: {Order.Quantity}");
+        //Console.WriteLine($"Customer: {Order.CustomerId}, Product: {Order.ProductId}, Quantity: {Order.Quantity}");
         
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        var order = new Domain.Entity.Order(Order.CustomerId, Order.ProductId, Order.Quantity);
- 
-        _orderRepository.AddOrder(order);
-        await _unitOfWork.CommitAsync();
+        var customer = await context.Customers.FindAsync(CustomerId);
+        Console.WriteLine($"Customer: {customer?.Id}");
+        
+        if (customer == null)
+        {
+            Console.WriteLine("Erro: Cliente não encontrados.");
+            return Page();
+        }
+        var product = await context.Products.FindAsync(ProductId);
+        
+        if (product == null)
+        {
+            Console.WriteLine("Erro: Produto não encontrados.");
+            return Page();
+        }
+        
+        var order = new Domain.Entity.Order(CustomerId,ProductId, Quantity);
+        orderRepository.AddOrder(order);
+        await unitOfWork.CommitAsync();
+        
         return RedirectToPage("Index");
     }
 }

@@ -17,15 +17,6 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
     }
     public void AddOrder(Order order)
     { 
-        context.Orders.Add(order);    
+       context.Orders.Add(order); 
     }
-    public void UpdateOrder(Order order)
-    {
-        context.Orders.Update(order);
-    }
-    public void DeleteOrder(Order order)
-    {
-        context.Orders.Remove(order);
-    }
-    
 }

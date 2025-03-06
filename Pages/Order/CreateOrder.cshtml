@@ -5,20 +5,23 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="Order.CustomerId">Cliente</label>
-        <select asp-for="Order.CustomerId" asp-items="Model.Customers" class="form-control">
+        <label asp-for="CustomerId">Cliente</label>
+        <select asp-for="CustomerId" asp-items="Model.Customers" class="form-control">
             <option value="">Selecione um Cliente</option>
         </select>
     </div>
+    
     <div class="form-group">
-        <label asp-for="Order.ProductId">Produto</label>
-        <select asp-for="Order.ProductId" asp-items="Model.Products" class="form-control">
+        <label asp-for="ProductId">Produto</label>
+        <select asp-for="ProductId" asp-items="Model.Products" class="form-control">
             <option value="">Selecione um Produto</option>
         </select>
     </div>
+    
     <div class="form-group">
-        <label asp-for="Order.Quantity"></label>
-        <input asp-for="Order.Quantity" class="form-control" type="number" min="1" />
+        <label asp-for="Quantity">Quantidade</label>
+        <input asp-for="Quantity" class="form-control" type="number" min="1" />
     </div>
+    
     <button type="submit" class="btn btn-success">Salvar Pedido</button>
 </form>

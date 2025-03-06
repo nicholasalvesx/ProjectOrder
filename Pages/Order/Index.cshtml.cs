@@ -7,7 +7,6 @@ namespace ProjectOrder.Pages.Order;
 public class OrdersModel : PageModel
 {
     private readonly IOrderRepository _orderRepository;
-
     public OrdersModel(IOrderRepository orderRepository)
     {
         _orderRepository = orderRepository;
